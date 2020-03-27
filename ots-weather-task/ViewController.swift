@@ -15,7 +15,9 @@ class ViewController: UIViewController {
     @IBOutlet var mainInfoView: UIView!
     @IBOutlet var mainTableView: UITableView!
 
-    let tableViewHandler = TableViewHandler()
+    let stateHelper = ViewControllerStateHelper()
+
+    private(set) lazy var tableViewHandler = TableViewHandler(onScroll: stateHelper.saveScrollContentOffset)
 
     private(set) lazy var locationManager = LocationManager(
         onUpdate: { [weak self] location in
@@ -42,6 +44,7 @@ class ViewController: UIViewController {
         mainTableView.delegate = tableViewHandler
         locationManager.requestWhenInUseAuthorization()
         weatherManager.loadPersistentWeatherData()
+        stateHelper.updateScrollContentOffsetFromPersistent(for: mainTableView)
     }
 }
 

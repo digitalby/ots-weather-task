@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED268778242E77E5002A144C /* ViewControllerStateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED268777242E77E5002A144C /* ViewControllerStateHelper.swift */; };
 		EDC81E71242E5A1C0024786B /* TableViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC81E70242E5A1C0024786B /* TableViewHandler.swift */; };
 		EDC81E73242E5C4C0024786B /* Double+RoundInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC81E72242E5C4C0024786B /* Double+RoundInt.swift */; };
 		EDC81E75242E5D230024786B /* Double+CompassPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC81E74242E5D230024786B /* Double+CompassPoint.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED268777242E77E5002A144C /* ViewControllerStateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerStateHelper.swift; sourceTree = "<group>"; };
 		EDC81E70242E5A1C0024786B /* TableViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewHandler.swift; sourceTree = "<group>"; };
 		EDC81E72242E5C4C0024786B /* Double+RoundInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+RoundInt.swift"; sourceTree = "<group>"; };
 		EDC81E74242E5D230024786B /* Double+CompassPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+CompassPoint.swift"; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				EDC81E72242E5C4C0024786B /* Double+RoundInt.swift */,
 				EDC81E74242E5D230024786B /* Double+CompassPoint.swift */,
 				EDC81E76242E60580024786B /* TimeFormatterService.swift */,
+				ED268777242E77E5002A144C /* ViewControllerStateHelper.swift */,
 			);
 			path = "ots-weather-task";
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				EDCAA5F0242E27DB00D3C19A /* GeocoderService.swift in Sources */,
 				EDCAA5CD242E12C000D3C19A /* AppDelegate.swift in Sources */,
 				EDCAA5E9242E1E2600D3C19A /* Secret.swift in Sources */,
+				ED268778242E77E5002A144C /* ViewControllerStateHelper.swift in Sources */,
 				EDCAA5CF242E12C000D3C19A /* SceneDelegate.swift in Sources */,
 				EDC81E73242E5C4C0024786B /* Double+RoundInt.swift in Sources */,
 				EDCAA5EB242E200300D3C19A /* WeatherError.swift in Sources */,

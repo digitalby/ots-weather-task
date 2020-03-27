@@ -10,6 +10,8 @@ import Foundation
 
 class PersistenceService {
     let userDefaults: UserDefaults
+    private let weatherKey = "weather"
+    private let mainTableViewContentOffsetKey = "mainTableViewContentOffset"
 
     init(userDefaults: UserDefaults) {
         self.userDefaults = userDefaults
@@ -20,10 +22,18 @@ class PersistenceService {
     }
 
     func saveWeatherData(_ data: Data) {
-        userDefaults.setValue(data, forKey: "weather")
+        userDefaults.setValue(data, forKey: weatherKey)
     }
 
     func loadWeatherData() -> Data? {
-        userDefaults.value(forKey: "weather") as? Data
+        userDefaults.value(forKey: weatherKey) as? Data
+    }
+
+    func saveContentOffset(contentOffset: Double) {
+        userDefaults.setValue(contentOffset, forKey: mainTableViewContentOffsetKey)
+    }
+
+    func loadContentOffset() -> Double? {
+        userDefaults.value(forKey: mainTableViewContentOffsetKey) as? Double
     }
 }

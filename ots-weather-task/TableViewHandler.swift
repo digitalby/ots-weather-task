@@ -10,6 +10,12 @@ import UIKit
 
 class TableViewHandler: NSObject, UITableViewDataSource, UITableViewDelegate {
 
+    let onScroll: (CGPoint)->()
+
+    init(onScroll: @escaping (CGPoint)->()) {
+        self.onScroll = onScroll
+    }
+
     var titles = [String]()
     var values = [String]()
 
@@ -34,5 +40,9 @@ class TableViewHandler: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        onScroll(scrollView.contentOffset)
     }
 }
