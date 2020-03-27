@@ -9,6 +9,11 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var weatherDescriptionLabel: UILabel!
+    @IBOutlet var temperatureLabel: UILabel!
+    @IBOutlet var mainInfoView: UIView!
+    @IBOutlet var mainTableView: UITableView!
 
     private(set) lazy var locationManager = LocationManager(
         onUpdate: { [weak self] location in
@@ -45,6 +50,5 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.requestWhenInUseAuthorization()
-//        weatherManager
     }
 }
