@@ -22,29 +22,30 @@ class WeatherManager {
     }
 
     func updateWeatherData(at coordinate: Coordinate) {
+        client.getWeatherData(
+            at: coordinate,
+            completion: { [weak self] data, error in
+                if let error = error {
+                    self?.onError(error)
+                } else if let data = data {
+                    self?.parseWeatherData(data)
+                }
+        })
+    }
+
+    func loadPersistentWeatherData() {
         if let persistentData = persistenceService.loadWeatherData() {
             parseWeatherData(persistentData)
-        } else {
-            client.getWeatherData(
-                at: coordinate,
-                completion: { [weak self] data, error in
-                    if let error = error {
-                        self?.onError(error)
-                    } else if let data = data {
-                        self?.parseWeatherData(data)
-                    }
-            })
         }
     }
 
     private func parseWeatherData(_ data: Data) {
         do {
-            let weather = try parser.parseWeather(from: data)
-            persistenceService.saveWeatherData(data)
-            onUpdate(weather)
+            let weather = try self.parser.parseWeather(from: data)
+            self.persistenceService.saveWeatherData(data)
+            self.onUpdate(weather)
         } catch {
-            print(error)
-            onError(error)
+            self.onError(error)
         }
     }
 }

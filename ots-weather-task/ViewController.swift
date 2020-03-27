@@ -15,6 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet var mainInfoView: UIView!
     @IBOutlet var mainTableView: UITableView!
 
+    let tableViewHandler = TableViewHandler()
+
     private(set) lazy var locationManager = LocationManager(
         onUpdate: { [weak self] location in
             print(location)
@@ -29,26 +31,66 @@ class ViewController: UIViewController {
     
 
     private(set) lazy var weatherManager = WeatherManager(
-        onUpdate: { weather in
-            print("weather: \(weather)")
-            let coordinate = Coordinate(
-                latitude: weather.latitude,
-                longitude: weather.longitude
-            )
-            let geocoder = GeocoderService()
-            geocoder.geocodeCity(location: coordinate.clLocation) { city, error in
-                if let error = error {
-                    print("geocoder error \(error)")
-                } else if let city = city {
-                    print("the city is \(city)")
-                }
-            }
-    }, onError: { error in
+        onUpdate: configureWithWeather,
+        onError: { error in
             print("weather error \(error)")
     })
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainTableView.dataSource = tableViewHandler
+        mainTableView.delegate = tableViewHandler
         locationManager.requestWhenInUseAuthorization()
+        weatherManager.loadPersistentWeatherData()
+    }
+}
+
+//MARK: - Configuration
+extension ViewController {
+    func configureWithWeather(_ weather: Weather) {
+        print("weather: \(weather)")
+        let coordinate = Coordinate(
+            latitude: weather.latitude,
+            longitude: weather.longitude
+        )
+        let geocoder = GeocoderService()
+        geocoder.geocodeCity(location: coordinate.clLocation) { [weak self] city, error in
+            if let error = error {
+                print("geocoder error \(error)")
+            } else if let city = city {
+                self?.locationLabel.text = city
+            }
+        }
+
+        let formatter = TimeFormatterService()
+
+        temperatureLabel.text = "\(weather.temperature.roundInt)°"
+        weatherDescriptionLabel.text = weather.description
+        var titles = [String]()
+        var values = [String]()
+        titles.append("Min Temperature")
+        values.append("\(weather.temperatureMin.roundInt)°")
+        titles.append("Max Temperature")
+        values.append("\(weather.temperatureMax.roundInt)°")
+        titles.append("Humidity")
+        values.append("\(weather.humidity.roundInt)%")
+        titles.append("Wind")
+        values.append("\(weather.windSpeed.roundInt) m/s \(weather.windDeg.compassPoint ?? "")")
+        titles.append("Feels Like")
+        values.append("\(weather.feelsLike.roundInt)°")
+        titles.append("Pressure")
+        let pressureMmHg = weather.pressure * 100 / 133
+        values.append("\(pressureMmHg.roundInt) mm Hg")
+        titles.append("Sunrise")
+        values.append("\(formatter.makeFormattedTime(for: weather.sunrise, timezone: weather.timezone))")
+        titles.append("Sunset")
+        values.append("\(formatter.makeFormattedTime(for: weather.sunset, timezone: weather.timezone))")
+        reloadTableViewWith(titles: titles, values: values)
+    }
+
+    func reloadTableViewWith(titles: [String], values: [String]) {
+        tableViewHandler.titles = titles
+        tableViewHandler.values = values
+        mainTableView.reloadData()
     }
 }

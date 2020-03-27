@@ -16,6 +16,7 @@ class WeatherParser {
             let weather = try decoder.decode(Weather.self, from: data)
             return weather
         } catch {
+            print(error)
             throw WeatherError.parsingFailed
         }
     }
