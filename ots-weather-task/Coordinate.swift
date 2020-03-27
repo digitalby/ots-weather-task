@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct Coordinate {
     let latitude: Double
     let longitude: Double
+}
+
+extension Coordinate {
+    var clLocation: CLLocation { CLLocation(latitude: latitude, longitude: longitude) }
 }

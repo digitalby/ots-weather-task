@@ -9,6 +9,8 @@
 import Foundation
 
 struct Weather: Decodable {
+    let latitude: Double
+    let longitude: Double
     let description: String
     let temperature: Double
     let feelsLike: Double
@@ -26,6 +28,9 @@ struct Weather: Decodable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let coordContainer = try container.nestedContainer(keyedBy: CoordKeys.self, forKey: .coord)
+        latitude = try coordContainer.decode(Double.self, forKey: .lat)
+        longitude = try coordContainer.decode(Double.self, forKey: .lon)
         let weatherData: [InnerWeather] = try container.decode([InnerWeather].self, forKey: .weather)
         description = weatherData.first?.description ?? ""
         let mainContainer = try container.nestedContainer(keyedBy: MainKeys.self, forKey: .main)
@@ -50,12 +55,18 @@ struct Weather: Decodable {
 
 extension Weather {
     enum CodingKeys: String, CodingKey {
+        case coord
         case weather
         case main
         case wind
         case clouds
         case sys
         case timezone
+    }
+
+    enum CoordKeys: String, CodingKey {
+        case lon
+        case lat
     }
 
     private class InnerWeather: Codable {

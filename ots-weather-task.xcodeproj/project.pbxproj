@@ -21,6 +21,9 @@
 		EDCAA5EB242E200300D3C19A /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EA242E200300D3C19A /* WeatherError.swift */; };
 		EDCAA5ED242E220E00D3C19A /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EC242E220E00D3C19A /* Coordinate.swift */; };
 		EDCAA5F0242E27DB00D3C19A /* GeocoderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */; };
+		EDCAA5F4242E45CB00D3C19A /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5F3242E45CB00D3C19A /* PersistenceService.swift */; };
+		EDCAA5F6242E469800D3C19A /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5F5242E469800D3C19A /* WeatherManager.swift */; };
+		EDCAA5F8242E476200D3C19A /* WeatherParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5F7242E476200D3C19A /* WeatherParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		EDCAA5EA242E200300D3C19A /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
 		EDCAA5EC242E220E00D3C19A /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderService.swift; sourceTree = "<group>"; };
+		EDCAA5F3242E45CB00D3C19A /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		EDCAA5F5242E469800D3C19A /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
+		EDCAA5F7242E476200D3C19A /* WeatherParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +93,9 @@
 				EDCAA5EA242E200300D3C19A /* WeatherError.swift */,
 				EDCAA5EC242E220E00D3C19A /* Coordinate.swift */,
 				EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */,
+				EDCAA5F3242E45CB00D3C19A /* PersistenceService.swift */,
+				EDCAA5F5242E469800D3C19A /* WeatherManager.swift */,
+				EDCAA5F7242E476200D3C19A /* WeatherParser.swift */,
 			);
 			path = "ots-weather-task";
 			sourceTree = "<group>";
@@ -163,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDCAA5E5242E1DA900D3C19A /* JSONDownloader.swift in Sources */,
+				EDCAA5F4242E45CB00D3C19A /* PersistenceService.swift in Sources */,
 				EDCAA5E1242E163200D3C19A /* LocationManager.swift in Sources */,
 				EDCAA5E7242E1DB300D3C19A /* WeatherClient.swift in Sources */,
 				EDCAA5D1242E12C000D3C19A /* ViewController.swift in Sources */,
@@ -172,7 +182,9 @@
 				EDCAA5CF242E12C000D3C19A /* SceneDelegate.swift in Sources */,
 				EDCAA5EB242E200300D3C19A /* WeatherError.swift in Sources */,
 				EDCAA5E3242E1C7400D3C19A /* Weather.swift in Sources */,
+				EDCAA5F8242E476200D3C19A /* WeatherParser.swift in Sources */,
 				EDCAA5ED242E220E00D3C19A /* Coordinate.swift in Sources */,
+				EDCAA5F6242E469800D3C19A /* WeatherManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
