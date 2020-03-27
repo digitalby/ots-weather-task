@@ -29,7 +29,11 @@ class ViewController: UIViewController {
             self?.client.getWeather(
                 at: coordinate,
                 completion: { weather, error in
-                    print("completion: \(weather), \(error)")
+                    if let error = error {
+                        print("weather error \(error)")
+                    } else if let weather = weather {
+                        print("the weather is \(weather)")
+                    }
             })
         }, onError: { error in
             print("Location failed with error \(error).")

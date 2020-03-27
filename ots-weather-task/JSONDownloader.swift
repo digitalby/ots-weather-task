@@ -19,7 +19,7 @@ class JSONDownloader {
         self.init(config: .default)
     }
 
-    func makeJSONTask(with request: URLRequest, completion: @escaping ([String: AnyObject]?, Error?)->()) -> URLSessionDataTask {
+    func makeJSONTask(with request: URLRequest, completion: @escaping (Data?, Error?)->()) -> URLSessionDataTask {
         let task = session.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
                 completion(nil, WeatherError.requestFailed)
@@ -28,12 +28,7 @@ class JSONDownloader {
 
             if response.statusCode == 200 {
                 if let data = data {
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject]
-                        completion(json, nil)
-                    } catch {
-                        completion(nil, WeatherError.parsingFailed)
-                    }
+                    completion(data, nil)
                 } else {
                     completion(nil, WeatherError.badDataRetrieved)
                 }
