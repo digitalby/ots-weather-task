@@ -11,26 +11,28 @@ import UIKit
 class TableViewHandler: NSObject, UITableViewDataSource, UITableViewDelegate {
 
     let onScroll: (CGPoint)->()
+    var viewModel: WeatherViewModel
 
-    init(onScroll: @escaping (CGPoint)->()) {
+    init(viewModel: WeatherViewModel, onScroll: @escaping (CGPoint)->()) {
+        self.viewModel = viewModel
+        print(self.viewModel.info.count)
         self.onScroll = onScroll
     }
-
-    var titles = [String]()
-    var values = [String]()
 
     func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        values.count
+        print("Updating: \(viewModel.info.count))")
+        return viewModel.info.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherInfoCell") else { fatalError() }
-        cell.textLabel?.text = titles[indexPath.row]
-        cell.detailTextLabel?.text = values[indexPath.row]
+        let infoAtIndex = viewModel.info[indexPath.row]
+        cell.textLabel?.text = infoAtIndex.title
+        cell.detailTextLabel?.text = infoAtIndex.value
         return cell
     }
 

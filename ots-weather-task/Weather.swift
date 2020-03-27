@@ -11,20 +11,20 @@ import Foundation
 struct Weather: Decodable {
     let latitude: Double
     let longitude: Double
-    let description: String
-    let temperature: Double
-    let feelsLike: Double
-    let temperatureMin: Double
-    let temperatureMax: Double
-    let pressure: Double
-    let humidity: Double
-    let windSpeed: Double
-    let windDeg: Double
+    let description: String?
+    let temperature: Double?
+    let feelsLike: Double?
+    let temperatureMin: Double?
+    let temperatureMax: Double?
+    let pressure: Double?
+    let humidity: Double?
+    let windSpeed: Double?
+    let windDeg: Double?
     //UTC time
-    let sunrise: Date
+    let sunrise: Date?
     //UTC time
-    let sunset: Date
-    let timezone: TimeZone
+    let sunset: Date?
+    let timezone: TimeZone?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -34,22 +34,28 @@ struct Weather: Decodable {
         let weatherData: [InnerWeather] = try container.decode([InnerWeather].self, forKey: .weather)
         description = weatherData.first?.description ?? ""
         let mainContainer = try container.nestedContainer(keyedBy: MainKeys.self, forKey: .main)
-        temperature = try mainContainer.decode(Double.self, forKey: .temp)
-        temperatureMin = try mainContainer.decode(Double.self, forKey: .tempMin)
-        temperatureMax = try mainContainer.decode(Double.self, forKey: .tempMax)
-        pressure = try mainContainer.decode(Double.self, forKey: .pressure)
-        humidity = try mainContainer.decode(Double.self, forKey: .humidity)
-        feelsLike = try mainContainer.decode(Double.self, forKey: .feelsLike)
+        temperature = try mainContainer.decodeIfPresent(Double.self, forKey: .temp)
+        temperatureMin = try mainContainer.decodeIfPresent(Double.self, forKey: .tempMin)
+        temperatureMax = try mainContainer.decodeIfPresent(Double.self, forKey: .tempMax)
+        pressure = try mainContainer.decodeIfPresent(Double.self, forKey: .pressure)
+        humidity = try mainContainer.decodeIfPresent(Double.self, forKey: .humidity)
+        feelsLike = try mainContainer.decodeIfPresent(Double.self, forKey: .feelsLike)
         let windContainer = try container.nestedContainer(keyedBy: WindKeys.self, forKey: .wind)
-        windSpeed = try windContainer.decode(Double.self, forKey: .speed)
-        windDeg = try windContainer.decode(Double.self, forKey: .deg)
+        windSpeed = try windContainer.decodeIfPresent(Double.self, forKey: .speed)
+        windDeg = try windContainer.decodeIfPresent(Double.self, forKey: .deg)
         let sysContainer = try container.nestedContainer(keyedBy: SysKeys.self, forKey: .sys)
-        let sunriseEpoch = try sysContainer.decode(Int.self, forKey: .sunrise)
-        let sunsetEpoch = try sysContainer.decode(Int.self, forKey: .sunset)
-        let timezoneSeconds = try container.decode(Int.self, forKey: .timezone)
-        sunrise = Date(timeIntervalSince1970: TimeInterval(sunriseEpoch))
-        sunset = Date(timeIntervalSince1970: TimeInterval(sunsetEpoch))
-        timezone = TimeZone(secondsFromGMT: timezoneSeconds)!
+        if let sunriseEpoch = try sysContainer.decodeIfPresent(Int.self, forKey: .sunrise) {
+            sunrise = Date(timeIntervalSince1970: TimeInterval(sunriseEpoch))
+        } else {
+            sunrise = nil
+        }
+        if let sunsetEpoch = try sysContainer.decodeIfPresent(Int.self, forKey: .sunset) {
+            sunset = Date(timeIntervalSince1970: TimeInterval(sunsetEpoch))
+        } else {
+            sunset = nil
+        }
+        let timezoneSeconds = try container.decodeIfPresent(Int.self, forKey: .timezone)
+        timezone = TimeZone(secondsFromGMT: timezoneSeconds ?? 0)!
     }
 }
 

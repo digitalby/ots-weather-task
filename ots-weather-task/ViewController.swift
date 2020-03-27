@@ -17,7 +17,7 @@ class ViewController: UIViewController {
 
     let stateHelper = ViewControllerStateHelper()
 
-    private(set) lazy var tableViewHandler = TableViewHandler(onScroll: stateHelper.saveScrollContentOffset)
+    private(set) lazy var tableViewHandler = TableViewHandler(viewModel: .unknown, onScroll: stateHelper.saveScrollContentOffset)
 
     private(set) lazy var locationManager = LocationManager(
         onUpdate: { [weak self] location in
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     
 
     private(set) lazy var weatherManager = WeatherManager(
-        onUpdate: configureWithWeather,
+        onUpdate: onWeatherUpdate,
         onError: { error in
             print("weather error \(error)")
     })
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
 
 //MARK: - Configuration
 extension ViewController {
-    func configureWithWeather(_ weather: Weather) {
+    func onWeatherUpdate(_ weather: Weather) {
         print("weather: \(weather)")
         let coordinate = Coordinate(
             latitude: weather.latitude,
@@ -60,40 +60,21 @@ extension ViewController {
         geocoder.geocodeCity(location: coordinate.clLocation) { [weak self] city, error in
             if let error = error {
                 print("geocoder error \(error)")
-            } else if let city = city {
-                self?.locationLabel.text = city
+            }
+            DispatchQueue.main.async {
+                let viewModel = WeatherViewModel(weather: weather, city: city)
+
+                guard let self = self else { return }
+                self.tableViewHandler.viewModel = viewModel
+                self.updateMainView(with: viewModel)
+                self.mainTableView.reloadData()
             }
         }
-
-        let formatter = TimeFormatterService()
-
-        temperatureLabel.text = "\(weather.temperature.roundInt)°"
-        weatherDescriptionLabel.text = weather.description
-        var titles = [String]()
-        var values = [String]()
-        titles.append("Min Temperature")
-        values.append("\(weather.temperatureMin.roundInt)°")
-        titles.append("Max Temperature")
-        values.append("\(weather.temperatureMax.roundInt)°")
-        titles.append("Humidity")
-        values.append("\(weather.humidity.roundInt)%")
-        titles.append("Wind")
-        values.append("\(weather.windSpeed.roundInt) m/s \(weather.windDeg.compassPoint ?? "")")
-        titles.append("Feels Like")
-        values.append("\(weather.feelsLike.roundInt)°")
-        titles.append("Pressure")
-        let pressureMmHg = weather.pressure * 100 / 133
-        values.append("\(pressureMmHg.roundInt) mm Hg")
-        titles.append("Sunrise")
-        values.append("\(formatter.makeFormattedTime(for: weather.sunrise, timezone: weather.timezone))")
-        titles.append("Sunset")
-        values.append("\(formatter.makeFormattedTime(for: weather.sunset, timezone: weather.timezone))")
-        reloadTableViewWith(titles: titles, values: values)
     }
 
-    func reloadTableViewWith(titles: [String], values: [String]) {
-        tableViewHandler.titles = titles
-        tableViewHandler.values = values
-        mainTableView.reloadData()
+    func updateMainView(with viewModel: WeatherViewModel) {
+        locationLabel.text = viewModel.city
+        temperatureLabel.text = viewModel.temperature
+        weatherDescriptionLabel.text = viewModel.description
     }
 }
