@@ -11,9 +11,17 @@ import UIKit
 class ViewController: UIViewController {
 
     private(set) lazy var client = WeatherClient()
+    private(set) lazy var geocoder = GeocoderService()
     private(set) lazy var locationManager = LocationManager(
         onUpdate: { [weak self] location in
             print(location)
+            self?.geocoder.geocodeCity(location: location) { city, error in
+                if let error = error {
+                    print("geocoder error \(error)")
+                } else if let city = city {
+                    print("the city is \(city)")
+                }
+            }
             let coordinate = Coordinate(
                 latitude: location.coordinate.latitude,
                 longitude: location.coordinate.longitude

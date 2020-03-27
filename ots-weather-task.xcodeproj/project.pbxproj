@@ -20,6 +20,7 @@
 		EDCAA5E9242E1E2600D3C19A /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5E8242E1E2500D3C19A /* Secret.swift */; };
 		EDCAA5EB242E200300D3C19A /* WeatherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EA242E200300D3C19A /* WeatherError.swift */; };
 		EDCAA5ED242E220E00D3C19A /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EC242E220E00D3C19A /* Coordinate.swift */; };
+		EDCAA5F0242E27DB00D3C19A /* GeocoderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		EDCAA5E8242E1E2500D3C19A /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		EDCAA5EA242E200300D3C19A /* WeatherError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherError.swift; sourceTree = "<group>"; };
 		EDCAA5EC242E220E00D3C19A /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
+		EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				EDCAA5E8242E1E2500D3C19A /* Secret.swift */,
 				EDCAA5EA242E200300D3C19A /* WeatherError.swift */,
 				EDCAA5EC242E220E00D3C19A /* Coordinate.swift */,
+				EDCAA5EF242E27DB00D3C19A /* GeocoderService.swift */,
 			);
 			path = "ots-weather-task";
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				EDCAA5E1242E163200D3C19A /* LocationManager.swift in Sources */,
 				EDCAA5E7242E1DB300D3C19A /* WeatherClient.swift in Sources */,
 				EDCAA5D1242E12C000D3C19A /* ViewController.swift in Sources */,
+				EDCAA5F0242E27DB00D3C19A /* GeocoderService.swift in Sources */,
 				EDCAA5CD242E12C000D3C19A /* AppDelegate.swift in Sources */,
 				EDCAA5E9242E1E2600D3C19A /* Secret.swift in Sources */,
 				EDCAA5CF242E12C000D3C19A /* SceneDelegate.swift in Sources */,
