@@ -6,16 +6,25 @@
 //  Copyright © 2020 digitalby. All rights reserved.
 //
 
-import CoreLocation
 import UIKit
 
 class ViewController: UIViewController {
 
-    let locationManager = LocationManager(
-        onUpdate: { location in
+    private(set) lazy var client = WeatherClient()
+    private(set) lazy var locationManager = LocationManager(
+        onUpdate: { [weak self] location in
             print(location)
-    }, onError: { error in
-        print("Location failed with error \(error).")
+            let coordinate = Coordinate(
+                latitude: location.coordinate.latitude,
+                longitude: location.coordinate.longitude
+            )
+            self?.client.getWeather(
+                at: coordinate,
+                completion: { weather, error in
+                    print("completion: \(weather), \(error)")
+            })
+        }, onError: { error in
+            print("Location failed with error \(error).")
     })
 
     override func viewDidLoad() {
